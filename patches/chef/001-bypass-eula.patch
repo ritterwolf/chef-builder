@@ -1,0 +1,23 @@
+diff --git a/lib/chef/application.rb b/lib/chef/application.rb
+index 0d80123bd..0030561b4 100644
+--- a/lib/chef/application.rb
++++ b/lib/chef/application.rb
+@@ -228,13 +228,12 @@ class Chef
+       raise Chef::Exceptions::Application, "#{self}: you must override setup_application"
+     end
+ 
++    # This is changed because the packages built by regular folks are under
++    # Apache Software License 2.0, not the Chef EULA. Stop the prompting by just
++    # returning true. That way no-one is forced to accept a possibly
++    # undesirable license.
+     def check_license_acceptance
+-      LicenseAcceptance::Acceptor.check_and_persist!(
+-        "infra-client",
+-        Chef::VERSION.to_s,
+-        logger: logger,
+-        provided: Chef::Config[:chef_license]
+-      )
++      true
+     end
+ 
+     # Actually run the application
